@@ -10,3 +10,11 @@ script:
   - npm run ci
 after_script:
   - npminstall codecov && codecov
+after_success:
+  - git clone https://github.com/mritd/mritd.me.git
+  - cd mritd.me && rm -rf * && cp -r ../_site/* .
+  - git config user.name "mritd"
+  - git config user.email "mritd1234@gmail.com"
+  - git add --all .
+  - git commit -m "Travis CI Auto Builder"
+  - git push --force https://$DEPLOY_TOKEN@github.com/mritd/mritd.me.git master
